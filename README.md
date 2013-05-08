@@ -1,2 +1,3 @@
-timeit
+TimeIt
 ======
+A simple timer app
