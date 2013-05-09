@@ -1,13 +1,48 @@
 require 'sinatra'
+require 'sinatra/json'
 require 'sinatra/reloader' if development?
 
 require 'haml'
+require 'rack-flash'
+require 'better_errors' if development?
 
-get '/:value?' do |val|
-  @test = val || "Null"
+require './lib/database'
+
+enable :sessions
+use Rack::Flash
+
+configure :development do
+  use BetterErrors::Middleware
+  BetterErrors.application_root = File.expand_path("..", __FILE__)
+end
+
+get '/' do
   haml :index
 end
 
-get '/hello/:name/:lastname' do |fname, lname|
-  "Hello, #{fname} #{lname}!"
+get '/timers/?' do
+  logger.info "Received GET /timers"
+  @timers = Timer.all
+  haml :timers
+end
+
+get '/timers/:id' do |id|
+  @timer = Timer.find_by_id(id)
+  if @timer
+    haml :timer
+  else
+    flash[:error] = "Could not find timer with id #{id}"
+    haml :timers
+  end
+end
+
+post '/timers/?' do
+  logger.info "Received POST /timers: #{params.inspect}"
+  timer = Timer.new(
+    id:     params[:id],
+    name:   params[:name],
+    end:    params[:end]
+  )
+
+  timer.save!
 end

@@ -1,0 +1,9 @@
+%h2 Timers
+  #timers
+    - unless @timers.nil? or @timers.count < 1
+      %ul.timers
+        - @timers.each do |timer|
+          %li
+            = timer.inspect
+    - else
+      No timers
