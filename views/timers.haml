@@ -1,9 +1,10 @@
-%h2 Timers
+%h2
+  Timers
   #timers
     - unless @timers.nil? or @timers.count < 1
       %ul.timers
         - @timers.each do |timer|
           %li
-            = timer.inspect
+            = "#{timer.id}: #{timer.name} - #{timer.end}"
     - else
       No timers

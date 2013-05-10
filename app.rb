@@ -7,6 +7,7 @@ require 'rack-flash'
 require 'better_errors' if development?
 
 require './lib/database'
+require './lib/seed' if development?
 
 enable :sessions
 use Rack::Flash
@@ -27,7 +28,7 @@ get '/timers/?' do
 end
 
 get '/timers/:id' do |id|
-  @timer = Timer.find_by_id(id)
+  @timer = Timer.get(id)
   if @timer
     haml :timer
   else
