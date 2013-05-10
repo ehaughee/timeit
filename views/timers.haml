@@ -5,6 +5,7 @@
       %ul.timers
         - @timers.each do |timer|
           %li
-            = "#{timer.id}: #{timer.name} - #{timer.end}"
+            %a{href:"/timers/#{timer.id}"}
+              = "#{timer.id}: #{timer.name} - #{timer.end}"
     - else
       No timers
