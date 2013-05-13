@@ -1,11 +1,22 @@
 %h2
   Timers
+- unless @timers.nil? or @timers.count < 1
   #timers
-    - unless @timers.nil? or @timers.count < 1
-      %ul.timers
+    %table
+      %thead
+        %tr
+          %th ID
+          %th Name
+          %th End Date
+      %tbody
         - @timers.each do |timer|
-          %li
-            %a{href:"/timers/#{timer.id}"}
-              = "#{timer.id}: #{timer.name} - #{timer.end}"
-    - else
-      No timers
+          %tr
+            %td
+              = timer.id
+            %td
+              %a{href:"/timers/#{timer.id}"}
+                = timer.name
+            %td
+              = timer.end
+- else
+  No timers
