@@ -17,6 +17,12 @@ configure :development do
   BetterErrors.application_root = File.expand_path("..", __FILE__)
 end
 
+helpers do
+  def partial(page, options={}, locals={})
+    haml page.to_sym, options.merge!(:layout => false), locals
+  end
+end
+
 get '/' do
   haml :index
 end
