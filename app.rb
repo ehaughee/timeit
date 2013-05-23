@@ -43,6 +43,18 @@ get '/timers/:id' do |id|
   end
 end
 
+# TODO: This is not RESTful
+get '/timers/:id/delete' do |id|
+  @timer = Timer.get(id)
+  if @timer
+    @timer.destroy!
+    haml :timers
+  else
+    flash[:error] = "Could not find timer with id #{id}"
+    haml :timers
+  end
+end
+
 post '/timers/?' do
   logger.info "Received POST /timers: #{params.inspect}"
   timer = Timer.new(

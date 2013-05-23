@@ -7,16 +7,26 @@
         %tr
           %th ID
           %th Name
-          %th End Date
+          %th End DateTime
+          %th Time Remaining
+          %th
       %tbody
         - @timers.each do |timer|
           %tr
             %td
               = timer.id
             %td
-              %a{href:"/timers/#{timer.id}"}
+              %a{href: "/timers/#{timer.id}"}
                 = timer.name
             %td
-              = timer.end
+              - t = timer.end
+              = "#{t.hour}:#{t.min}:#{t.sec} #{t.month}/#{t.day}/#{t.year}"
+            %td
+              / TODO: Date math
+              / - rt = timer.end - DateTime.now
+              / = "#{rt.hour}:#{rt.min}:#{rt.sec} #{rt.month}/#{rt.day}/#{rt.year}"
+            %td
+              %a.small.button.radius.green{href: "/timers/#{timer.id}/edit"} Edit
+              %a.small.button.radius.alert{href: "/timers/#{timer.id}/delete"} Delete
 - else
   No timers
